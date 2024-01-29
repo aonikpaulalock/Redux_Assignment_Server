@@ -1,9 +1,30 @@
+import httpStatus from "http-status";
+import { AppError } from "../../errors/appError";
+import { Eyeglass } from "../EyeGlass/product.model";
 import { TSales } from "./sale.interface";
 import { Sales } from "./sale.model";
 
 const createSalesIntoDB = async (payload: TSales) => {
-  const result = await Sales.create(payload);
-  return result;
+  const { productId, quantity } = payload;
+
+  const result = await Eyeglass.findOneAndUpdate(
+    { _id: productId, productQuantity: { $gte: quantity } },
+    { $inc: { productQuantity: -quantity } },
+    { new: true }
+  );
+
+  if (result) {
+    if (result.productQuantity === 0) {
+      await Eyeglass.deleteOne({ _id: productId });
+    }
+    const salesResult = await Sales.create(payload);
+    return salesResult;
+  } else {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Insufficient quantity or glass not found"
+    );
+  }
 };
 
 const getAllSalesIntoDB = async (query: Record<string, unknown>) => {
@@ -11,7 +32,6 @@ const getAllSalesIntoDB = async (query: Record<string, unknown>) => {
 
   let dateFilter: Record<string, unknown> = {};
 
-  // Check the filterBy query parameter
   if (filterBy) {
     const currentDate = new Date();
 

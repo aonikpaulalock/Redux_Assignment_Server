@@ -26,6 +26,18 @@ const getAllProduct = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleProduct = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await EyeGlassServices.getSingleProductIntoDB(id);
+  //   send response
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Single product retrieved successfully",
+    data: result,
+  });
+});
+
 const deleteProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await EyeGlassServices.deleteProductIntoDB(id);
@@ -33,7 +45,19 @@ const deleteProduct = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Products deleted successfully",
+    message: "Product deleted successfully",
+    data: result,
+  });
+});
+
+const deleteManyProduct = catchAsync(async (req, res) => {
+  const ids = req.body;
+  const result = await EyeGlassServices.deleteManyProductsIntoDB(ids);
+  //   send response
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "All Products deleted successfully",
     data: result,
   });
 });
@@ -54,6 +78,8 @@ const updateProduct = catchAsync(async (req, res) => {
 export const ProductController = {
   createProduct,
   getAllProduct,
+  getSingleProduct,
   deleteProduct,
   updateProduct,
+  deleteManyProduct,
 };

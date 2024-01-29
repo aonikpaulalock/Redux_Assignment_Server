@@ -12,7 +12,9 @@ router.post(
 );
 
 router.get("/get-all-products", ProductController.getAllProduct);
+router.get("/get-single-product/:id", ProductController.getSingleProduct);
 router.delete("/delete-product/:id", ProductController.deleteProduct);
+router.delete("/delete-products", ProductController.deleteManyProduct);
 router.put("/update-product/:id", ProductController.updateProduct);
 
 export const ProductRoutes = router;
