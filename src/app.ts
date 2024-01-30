@@ -8,12 +8,14 @@ import notFound from './app/middleware/notFound';
 const app: Application = express();
 
 //! parsers
-app.use(express.json());
 app.use(cors(
   {
-    origin: ["*"],
+    origin: ["https://silly-sundae-0a228d.netlify.app/"],
+    methods: ["GET","POST","PUT","PATCH","DELETE"],
+    optionsSuccessStatus: 204,
     credentials: true
   }));
+app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
   res.send(`Eye Server Running on port ${config.port}`);
