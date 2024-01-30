@@ -3,6 +3,7 @@ import { ProductValidation } from "./product.validation";
 import { ProductController } from "./product.controller";
 import validateRequest from "../../middleware/validateRequest";
 
+//Product Router
 const router = express.Router();
 
 router.post(

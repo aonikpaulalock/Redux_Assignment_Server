@@ -93,7 +93,6 @@ const getAllSalesIntoDB = async (query: Record<string, unknown>) => {
         };
         break;
       default:
-        // Handle invalid filterBy values or no filterBy parameter
         break;
     }
   }

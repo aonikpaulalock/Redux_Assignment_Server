@@ -7,16 +7,22 @@ import notFound from './app/middleware/notFound';
 
 const app: Application = express();
 
-//parsers
+//! parsers
 app.use(express.json());
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(cors(
+  {
+    origin: ["http://localhost:5173"],
+    credentials: true
+  }));
 
 app.get("/", (req: Request, res: Response) => {
   res.send(`Eye Server Running on port ${config.port}`);
 });
 
+//! Entry Point Api
 app.use("/api", router);
-// global error handler middleware
+
+//! global error handler middleware
 app.use(globalErrorHandler);
 app.use(notFound);
 

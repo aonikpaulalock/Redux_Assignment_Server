@@ -6,7 +6,7 @@ import catchAsync from "../../utils/catchAsync";
 const createSales = catchAsync(async (req, res) => {
   const newSales = req.body;
   const result = await SalesServices.createSalesIntoDB(newSales);
-  //   send response
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -17,7 +17,7 @@ const createSales = catchAsync(async (req, res) => {
 
 const getAllSales = catchAsync(async (req, res) => {
   const result = await SalesServices.getAllSalesIntoDB(req.query);
-  //   send response
+ 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

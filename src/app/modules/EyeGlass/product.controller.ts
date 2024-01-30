@@ -6,7 +6,7 @@ import catchAsync from "../../utils/catchAsync";
 const createProduct = catchAsync(async (req, res) => {
   const newUser = req.body;
   const result = await EyeGlassServices.createProductIntoDB(newUser);
-  //   send response
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -17,7 +17,7 @@ const createProduct = catchAsync(async (req, res) => {
 
 const getAllProduct = catchAsync(async (req, res) => {
   const result = await EyeGlassServices.getAllProductIntoDB(req.query);
-  //   send response
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -29,7 +29,7 @@ const getAllProduct = catchAsync(async (req, res) => {
 const getSingleProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await EyeGlassServices.getSingleProductIntoDB(id);
-  //   send response
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -41,7 +41,7 @@ const getSingleProduct = catchAsync(async (req, res) => {
 const deleteProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await EyeGlassServices.deleteProductIntoDB(id);
-  //   send response
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -53,7 +53,7 @@ const deleteProduct = catchAsync(async (req, res) => {
 const deleteManyProduct = catchAsync(async (req, res) => {
   const ids = req.body;
   const result = await EyeGlassServices.deleteManyProductsIntoDB(ids);
-  //   send response
+ 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -66,7 +66,7 @@ const updateProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
   const newProduct = req.body;
   const result = await EyeGlassServices.updateProductIntoDB(id, newProduct);
-  //   send response
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

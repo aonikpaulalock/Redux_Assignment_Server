@@ -3,6 +3,7 @@ import { SalesZodValidations } from "./sale.validation";
 import { SalesControllers } from "./sale.controller";
 import validateRequest from "../../middleware/validateRequest";
 
+// Sales Router
 const router = express.Router();
 
 router.post(
