@@ -7,15 +7,19 @@ import notFound from './app/middleware/notFound';
 
 const app: Application = express();
 
+const allowedOrigins = [
+  'http://localhost:5173/',
+  'https://eyeglass.vercel.app',
+];
 //! parsers
-app.use(cors(
-  {
-    origin: ["https://silly-sundae-0a228d.netlify.app"],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    optionsSuccessStatus: 204,
-    credentials: true
-  }));
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(`Eye Server Running on port ${config.port}`);
