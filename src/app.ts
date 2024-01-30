@@ -10,7 +10,7 @@ const app: Application = express();
 //! parsers
 app.use(cors(
   {
-    origin: "https://silly-sundae-0a228d.netlify.app",
+    origin: ["https://silly-sundae-0a228d.netlify.app"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     optionsSuccessStatus: 204,
     credentials: true
