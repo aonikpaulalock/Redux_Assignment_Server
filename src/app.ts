@@ -9,11 +9,17 @@ const app: Application = express();
 
 //! parsers
 app.use(express.json());
-app.use(cors(
-  {
-    origin: "https://silly-sundae-0a228d.netlify.app",
-    credentials: true
-  }));
+// app.use(cors(
+//   {
+//     origin: "https://silly-sundae-0a228d.netlify.app",
+//     credentials: true
+//   }));
+app.use(cors({
+  origin: "https://silly-sundae-0a228d.netlify.app",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"], // Add the necessary HTTP methods
+  allowedHeaders: ["Content-Type"], // Add the necessary headers
+}));
 
 app.get("/", (req: Request, res: Response) => {
   res.send(`Eye Server Running on port ${config.port}`);
