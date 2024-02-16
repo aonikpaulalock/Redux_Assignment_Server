@@ -16,7 +16,8 @@ const createProduct = catchAsync(async (req, res) => {
 });
 
 const getAllProduct = catchAsync(async (req, res) => {
-  const result = await EyeGlassServices.getAllProductIntoDB(req.query);
+  const { email, role } = req.params;
+  const result = await EyeGlassServices.getAllProductIntoDB(req.query, email, role);
 
   sendResponse(res, {
     success: true,
@@ -53,7 +54,7 @@ const deleteProduct = catchAsync(async (req, res) => {
 const deleteManyProduct = catchAsync(async (req, res) => {
   const ids = req.body;
   const result = await EyeGlassServices.deleteManyProductsIntoDB(ids);
- 
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

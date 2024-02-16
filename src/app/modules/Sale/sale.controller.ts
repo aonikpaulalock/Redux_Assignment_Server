@@ -16,8 +16,13 @@ const createSales = catchAsync(async (req, res) => {
 });
 
 const getAllSales = catchAsync(async (req, res) => {
-  const result = await SalesServices.getAllSalesIntoDB(req.query);
- 
+  const { email, role } = req.params;
+  const result = await SalesServices.getAllSalesIntoDB(
+    req.query,
+    email,
+    role
+  );
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -26,4 +31,21 @@ const getAllSales = catchAsync(async (req, res) => {
   });
 });
 
-export const SalesControllers = { createSales, getAllSales };
+
+const getSingleSale = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await SalesServices.getSingleSaleIntoDB(id);
+  //   send response
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Sale is retrieved successfully",
+    data: result,
+  });
+});
+
+export const SalesControllers = {
+  createSales,
+  getAllSales,
+  getSingleSale
+};

@@ -11,6 +11,9 @@ router.post(
   validateRequest(SalesZodValidations.createSalesValidationSchema),
   SalesControllers.createSales
 );
-router.get("/get-all-sales", SalesControllers.getAllSales);
+
+router.get("/get-all-sales/:email/:role", SalesControllers.getAllSales);
+
+router.get("/get-sale/:id", SalesControllers.getSingleSale);
 
 export const SalesRoutes = router;

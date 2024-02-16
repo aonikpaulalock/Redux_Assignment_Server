@@ -3,9 +3,15 @@ import { AppError } from "../../errors/appError";
 import { Eyeglass } from "../EyeGlass/product.model";
 import { TSales } from "./sale.interface";
 import { Sales } from "./sale.model";
+import { User } from "../user/user.model";
 
 const createSalesIntoDB = async (payload: TSales) => {
   const { productId, quantity } = payload;
+  const userEmail = payload.userEmail;
+  const userExist = await User.findOne({ email: userEmail });
+  if (!userExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
 
   const result = await Eyeglass.findOneAndUpdate(
     { _id: productId, productQuantity: { $gte: quantity } },
@@ -27,7 +33,11 @@ const createSalesIntoDB = async (payload: TSales) => {
   }
 };
 
-const getAllSalesIntoDB = async (query: Record<string, unknown>) => {
+const getAllSalesIntoDB = async (
+  query: Record<string, unknown>,
+  email: string,
+  role: string
+) => {
   const { filterBy } = query;
 
   let dateFilter: Record<string, unknown> = {};
@@ -95,10 +105,34 @@ const getAllSalesIntoDB = async (query: Record<string, unknown>) => {
       default:
         break;
     }
+
+    let result;
+
+    if (role === "manager") {
+      result = await Sales.find(dateFilter).populate("productId");
+    } else if (role === "user") {
+      result = await Sales.find({ userEmail: email, ...dateFilter }).populate(
+        "productId"
+      );
+    } else {
+      throw new AppError(httpStatus.BAD_REQUEST, "Invalid user role");
+    }
+
+    return result;
   }
 
   const result = await Sales.find(dateFilter).populate("productId");
   return result;
 };
 
-export const SalesServices = { createSalesIntoDB, getAllSalesIntoDB };
+const getSingleSaleIntoDB = async (id: string) => {
+  const result = Sales.findById(id).populate("productId");
+  return result;
+};
+
+
+export const SalesServices = {
+  createSalesIntoDB,
+  getAllSalesIntoDB,
+  getSingleSaleIntoDB
+};

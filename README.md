@@ -29,4 +29,4 @@
 
 ### Start the server on the terminal
 
-`npm run dev`
+`npm run start:dev`
